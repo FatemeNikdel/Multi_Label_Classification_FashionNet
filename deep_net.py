@@ -56,3 +56,5 @@ class FashionNet():
                     epochs = self.epochs,
                     verbose = 1)
                         
+
+    
