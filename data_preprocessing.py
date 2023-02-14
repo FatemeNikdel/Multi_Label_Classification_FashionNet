@@ -18,17 +18,24 @@ class PreProcessing():
             # Read images
             img = cv2.imread(name)
             # Resize and Normalize
-            img = cv2.resize(img, (64, 64))/255.0
+            img = cv2.resize(img, (96, 96))/255.0
+            # RGB Color
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # Create Dataset
             data.append(img)
             # Create Labels
             category_label.append(name.split("\\")[-2].split('_')[1]) 
             color_label.append(name.split("\\")[-2].split('_')[0])
+
+            if i % 100 == 0:
+                print(f"[INFO]: {i}/25000 processed!")
             
             return data, category_label, color_label
 
 
     def label_binarizer(category_label, color_label):
+        color_label = np.array(color_label)
+        category_label = np.array(category_label)
         category_LB = LabelBinarizer()
         Color_LB = LabelBinarizer()
         category_label = category_LB.fit_transform(category_label)
